@@ -1,0 +1,74 @@
+<!-- Sidebar Container -->
+<div class="flex">
+  <!-- Sidebar -->
+  <aside
+    [class.w-64]="isOpen"
+    [class.w-18]="!isOpen"
+    class="bg-gray-900 text-white h-screen transition-all duration-300 flex flex-col justify-between"
+  >
+    <!-- Sidebar Header -->
+    <div>
+      <div class="flex items-center justify-between p-4">
+        <h1 *ngIf="isOpen" class="text-lg font-bold">Prenatal & Child Immunization</h1>
+        <button
+          (click)="toggleSidebar()"
+          class="p-2 rounded-md bg-gray-800 hover:bg-gray-700"
+        >
+          <img class="h-5 w-6" src="images/icons/hamburger.png" alt="Menu">
+        </button>
+      </div>
+
+      <!-- Sidebar Navigation Links -->
+      <nav class="mt-4">
+        <a [routerLink]="['/appointment']" routerLinkActive="router-link-active"  class="flex items-center p-3 hover:bg-gray-700 rounded-md transition">
+          <img class="h-8 w-8 mr-2" src="images/icons/appoinments.png" alt="Appointments">
+          <span *ngIf="isOpen">Appointments</span>
+        </a>
+        <a [routerLink]="['/immunization']" (click)="toggleChildImmunization()" 
+        class="flex items-center p-3 hover:bg-gray-700 rounded-md transition">
+       <img class="h-8 w-8 mr-2" src="images/icons/immune.png" alt="Child Immunization">
+       <span *ngIf="isOpen">Child Immunization</span>
+       <svg *ngIf="isOpen"  class="w-5 h-5 ml-auto transition-transform  duration-300" 
+            [ngClass]="{'rotate-180': isChildImmunizationOpen}" 
+            fill="currentColor" viewBox="0 0 20 20">
+         <path fill-rule="evenodd" 
+               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" 
+               clip-rule="evenodd">
+         </path>
+       </svg>
+     </a>
+     
+     <!-- Dropdown for Child Immunization -->
+     <div *ngIf="isChildImmunizationOpen" 
+          @dropdownAnimation 
+          class="ml-10 mt-1 space-y-2 transition-all">
+       <button
+               class="flex items-center px-3 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition">
+         <img class="h-6 w-6 mr-2" src="images/icons/baby-boy.png" alt="Add">
+         <span>Add Child</span>
+       </button>
+     </div>
+     
+      </nav>
+    </div>
+
+    <!-- Profile, Settings, Sign Out (Pinned at the Bottom) -->
+    <div class="mt-auto border-t border-gray-70 ">
+      <a  class="flex items-center p-3 hover:bg-gray-700 rounded-md transition">
+        <img class="h-8 w-8 mr-2" [src]="user$?.photoURL || 'assets/default-profile.png'" alt="Child Immunization">
+        <span *ngIf="isOpen">Profile</span>
+      </a>
+      <a  class="flex items-center p-3 hover:bg-gray-700 rounded-md transition">
+        <img class="h-5 w-5 mr-2" src="images/icons/setting.png" alt="Settings">
+        <span *ngIf="isOpen">Settings</span>
+      </a>
+      <a  (click)="signOut()" class="flex items-center p-3 hover:bg-gray-700 rounded-md transition">
+        <img class="h-5 w-5 mr-2" src="images/icons/signout.png" alt="Settings">
+        <span *ngIf="isOpen">Sign Out</span>
+      </a>
+    </div>
+  </aside>
+    <router-outlet></router-outlet>
+
+</div>
+
